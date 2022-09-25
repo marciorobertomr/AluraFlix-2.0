@@ -1,6 +1,6 @@
 # AluraFlix-2.0
 
-Portfólio de Filmes
+Projeto Coletânea de Filmes
 
 ## Tecnologias
 
