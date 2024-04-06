@@ -1,31 +1,29 @@
-body {
-    font-family: "Roboto Mono", monospace;
+/* Importação de Fonte */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    font-family: "Montserrat", sans-serif;
     text-align: center;
+    color: #ffffff;
+}
+
+body {
     background-image: url("https://www.alura.com.br/assets/img/imersoes/dev-2021/dia-04-aluraflix-e-filmes.png");
     background-color: #000000;
     background-size: cover;
     background-position: center top;
     background-repeat: no-repeat;
-    color: #ffffff;
 }
 
-.container {
-    text-align: center;
-    padding: 20px;
-}
+/* ------ Estilo Cabeçalho ------ */
 
-.page-title {
-    color: #ffffff;
-    margin: 0 0 10px;
-}
-
-.page-subtitle {
-    color: #ffffff;
-    margin-top: 10px;
+header {
+    margin: 2em auto;
 }
 
 .page-logo {
-    width: 150px;
+    width: 130px;
 }
 
 .alura-logo {
@@ -35,19 +33,18 @@ body {
     right: 10px;
 }
 
-#listaFilmes img {
-    margin: 10px;
-    max-height: 250px;
-}
+/* ------ Estilo Formulário de Cadastro ------ */
 
-.form-wrapper {
-    margin: 0 0 20px;
+.container {
+    padding-bottom: 20px;
 }
 
 .form-wrapper input {
     display: block;
     margin: 0 auto;
-    padding: 10px 15px;
+    padding: 1em;
+    width: 20em;
+    color: #000000;
 }
 
 .form-wrapper button {
@@ -64,12 +61,26 @@ body {
 }
 
 .form-wrapper button:hover {
-    opacity: 0.8;
+    opacity: 0.6;
+}
+
+/* ------ Estilo Lista de Filmes ------ */
+
+#listaFilmes img {
+    margin: 10px;
+    height: 250px;
+    max-width: 250px;
+    object-fit: cover; /* Redimensiona a imagem para preencher o espaço disponível, mantendo proporções */
 }
 
 figure {
     display: inline-block;
-    margin: auto 0px;
+    margin: 0 auto 20px;
+    transition: 0.3s;
+}
+
+figure:hover {
+    scale: 1.1;
 }
 
 figure > img {
