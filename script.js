@@ -16,67 +16,110 @@
 */
 
 function adicionarFilme() {
-    let imagemFilmeFavorito = document.getElementById("imagemFilme").value;
-    let nomeFilmeFavorito = document.getElementById("nomeFilme").value;
+    let nomeFilmeFavoritoInput = document.getElementById("nomeFilme");
+    let imagemFilmeFavoritoInput = document.getElementById("imagemFilme");
+
+    let nomeFilmeFavorito = nomeFilmeFavoritoInput.value;
+    let imagemFilmeFavorito = imagemFilmeFavoritoInput.value;
 
     nomeFilmeFavorito = nomeFilmeFavorito.trim();
     imagemFilmeFavorito = imagemFilmeFavorito.replace(/\s/g, '');
     
     let novo = true;
+    let filmes = coletaneaFilmes();
+
+    let filme = {
+        nome: nomeFilmeFavorito,
+        imagem: imagemFilmeFavorito
+    }
+
     
-    if (imagemFilmeFavorito.endsWith(".jpg") && nomeFilmeFavorito != "") { //verifica se o final de uma string termina com .jpg, identifcando se é uma imagem. != verifica se é diferente
-        for (let i = 0; i < listaImagem.length; i++) {
-            if (imagemFilmeFavorito == listaImagem[i] && nomeFilmeFavorito == listaNome[i]) {
+    if (imagemFilmeFavorito.endsWith(".jpg") && nomeFilmeFavorito != "") {
+        for (let i = 0; i < filmes.length; i++) {
+            if (nomeFilmeFavorito === filmes[i].nome && imagemFilmeFavorito === filmes[i].imagem) {
                 alert("Filme já existente na coletânia.");
                 novo = false;
                 break;
-            } else if (imagemFilmeFavorito == listaImagem[i]) {
+            } else if (imagemFilmeFavorito === filmes[i].imagem) {
                 alert("Imagem já adicionado. Por favor, escolha outra.");
                 novo = false;
                 break;
-            } else if (nomeFilmeFavorito == listaNome[i]) {
-                alert("Nome já adicionado. Por favor, escolha outro.");
+            } else if (nomeFilmeFavorito == filmes[i].nome) {
+                alert("Nome já adicionada. Por favor, escolha outro.");
                 novo = false;
                 break;
             }
         }
 
         if (novo == true) {
-            listaImagem.push(imagemFilmeFavorito);
-            listaNome.push(nomeFilmeFavorito);
-            localLista = nomeFilmeFavorito.replace(/ /g, ""); //Remove os espaços de uma string
-            listarFilmesNaTela(imagemFilmeFavorito , nomeFilmeFavorito , localLista.toLowerCase()); //Envia a variável para a função
+            let localLista = nomeFilmeFavorito.replace(/ /g, "").toLowerCase();
+            localStorage.setItem(localLista, JSON.stringify(filme));
+            listarFilmesNaTela(); //Envia a variável para a função
         }
     } else {
         alert("Endereço ou nome do filme inválido");
     }
-    document.getElementById("imagemFilme").value = ""; //Limpa o valor do campo input, retornando vazio
-    document.getElementById("nomeFilme").value = "";
+    
+    nomeFilmeFavoritoInput.value = ""; 
+    imagemFilmeFavoritoInput.value = "";
 }
 
-function listarFilmesNaTela (imagemFilme , nomeFilme , localLista) {
-    let elementoFilmeFavorito = "<figure id=" + localLista + "><img src=" + imagemFilme + ">" + "<figcaption>" + nomeFilme + "</figcaption></figure>";
+function listarFilmesNaTela () {
     let elementoListaFilmes = document.getElementById("listaFilmes");
-    elementoListaFilmes.innerHTML = elementoListaFilmes.innerHTML + elementoFilmeFavorito;
+    elementoListaFilmes.innerHTML = '';
+
+    let elementoFilmeFavorito = '';
+    let filmes = coletaneaFilmes();
+
+    for(let i = 0; i < filmes.length; i++) {
+        elementoFilmeFavorito += "<figure id=" + filmes[i].identificador + "><img src=" + filmes[i].imagem + ">" + "<figcaption>" + filmes[i].nome + "</figcaption></figure>";
+
+    }
+
+    elementoListaFilmes.innerHTML = elementoFilmeFavorito;
+}
+
+function coletaneaFilmes() {
+    let filmes = [];
+
+    for(let i = 0; i < localStorage.length; i++) {
+        const chave = localStorage.key(i);
+
+        let valor = JSON.parse(localStorage.getItem(chave));
+
+        let filme = {
+            identificador: chave,
+            nome: valor.nome,
+            imagem: valor.imagem
+        }
+
+        filmes.push(filme);
+    }
+
+    return filmes;
 }
 
 function removerFilme() {
-    let imagemFilmeDeletado = document.getElementById("imagemFilme").value;
-    let nomeFilmeDeletado = document.getElementById("nomeFilme").value;
+    let nomeFilmeDeletadoInput = document.getElementById("nomeFilme");
+    let imagemFilmeDeletadoInput = document.getElementById("imagemFilme");
+
+    let nomeFilmeDeletado = nomeFilmeDeletadoInput.value;
+    let imagemFilmeDeletado = imagemFilmeDeletadoInput.value;
 
     nomeFilmeDeletado = nomeFilmeDeletado.trim();
     imagemFilmeDeletado = imagemFilmeDeletado.replace(/\s/g, '');
 
     let existe;
-    let indice;
+    let idFilme;
+    let filmes = coletaneaFilmes();
 
     if (imagemFilmeDeletado.endsWith(".jpg") && nomeFilmeDeletado != "") {
         let confirma = confirm("Deseja excluir o filme?");
         if (confirma == true) {
-            for (let i = 0; i < listaImagem.length; i++) {
-                if (imagemFilmeDeletado == listaImagem[i] && nomeFilmeDeletado == listaNome[i]) {
+            for (let i = 0; i < filmes.length; i++) {
+                if (nomeFilmeDeletado === filmes[i].nome && imagemFilmeDeletado === filmes[i].imagem) {
                     existe = true;
-                    indice = i;
+                    idFilme = filmes[i].identificador;
                     break;
                 } else {
                     existe = false;
@@ -84,10 +127,7 @@ function removerFilme() {
             }
 
             if (existe === true) {
-                listaImagem.splice(indice, 1); 
-                listaNome.splice(indice, 1);
-                localLista = nomeFilmeDeletado.replace(/ /g, "");
-                retirarFilmesDaTela(localLista.toLowerCase());
+                retirarFilmeDaTela(idFilme);
             } else {
                 alert("O filme não existe na coletânea.");
             }
@@ -97,15 +137,17 @@ function removerFilme() {
     } else {
         alert("Imagem ou nome do filme inválido");
     }
-    document.getElementById("imagemFilme").value = "";
-    document.getElementById("nomeFilme").value = "";
+
+    nomeFilmeDeletadoInput.value = "";
+    imagemFilmeDeletadoInput.value = "";
 }
 
-function retirarFilmesDaTela (localLista) {
-    let filmeDeletado = document.getElementById(localLista); 
+function retirarFilmeDaTela (idFilme) {
+    let filmeDeletado = document.getElementById(idFilme); 
+    localStorage.removeItem(idFilme);
     filmeDeletado.remove();
 }
 
-let listaImagem = [];
-let listaNome = [];
-let localLista = "";
+
+
+listarFilmesNaTela();
