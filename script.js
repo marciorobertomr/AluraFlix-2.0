@@ -54,6 +54,7 @@ function adicionarFilme() {
         if (novo == true) {
             let localLista = nomeFilmeFavorito.replace(/ /g, "").toLowerCase();
             localStorage.setItem(localLista, JSON.stringify(filme));
+            location.reload();
             listarFilmesNaTela(); //Envia a variável para a função
         }
     } else {
@@ -62,6 +63,7 @@ function adicionarFilme() {
     
     nomeFilmeFavoritoInput.value = ""; 
     imagemFilmeFavoritoInput.value = "";
+
 }
 
 function listarFilmesNaTela () {
@@ -72,7 +74,7 @@ function listarFilmesNaTela () {
     let filmes = coletaneaFilmes();
 
     for(let i = 0; i < filmes.length; i++) {
-        elementoFilmeFavorito += "<figure id=" + filmes[i].identificador + "><img src=" + filmes[i].imagem + ">" + "<figcaption>" + filmes[i].nome + "</figcaption></figure>";
+        elementoFilmeFavorito += "<figure id=" + filmes[i].identificador + "><img src=" + filmes[i].imagem + ">" + "<figcaption>" + filmes[i].nome + "<abbr title='Remover'><ion-icon class='remover' name='close-outline'></abbr></ion-icon></figcaption></figure>";
 
     }
 
@@ -99,55 +101,28 @@ function coletaneaFilmes() {
     return filmes;
 }
 
-function removerFilme() {
-    let nomeFilmeDeletadoInput = document.getElementById("nomeFilme");
-    let imagemFilmeDeletadoInput = document.getElementById("imagemFilme");
-
-    let nomeFilmeDeletado = nomeFilmeDeletadoInput.value;
-    let imagemFilmeDeletado = imagemFilmeDeletadoInput.value;
-
-    nomeFilmeDeletado = nomeFilmeDeletado.trim();
-    imagemFilmeDeletado = imagemFilmeDeletado.replace(/\s/g, '');
-
-    let existe;
-    let idFilme;
-    let filmes = coletaneaFilmes();
-
-    if (imagemFilmeDeletado.endsWith(".jpg") && nomeFilmeDeletado != "") {
-        let confirma = confirm("Deseja excluir o filme?");
-        if (confirma == true) {
-            for (let i = 0; i < filmes.length; i++) {
-                if (nomeFilmeDeletado === filmes[i].nome && imagemFilmeDeletado === filmes[i].imagem) {
-                    existe = true;
-                    idFilme = filmes[i].identificador;
-                    break;
-                } else {
-                    existe = false;
-                }
-            }
-
-            if (existe === true) {
-                retirarFilmeDaTela(idFilme);
-            } else {
-                alert("O filme não existe na coletânea.");
-            }
-        } else {
-            alert("O filme não foi excluído.")
-        }
+function removerFilme(idFilme, legenda) {
+    let confirma = confirm("Deseja excluir o filme: " + legenda.textContent);
+    
+    if(confirma) {
+        let filmeDeletado = document.getElementById(idFilme.id); 
+        localStorage.removeItem(idFilme.id);
+        filmeDeletado.remove();
     } else {
-        alert("Imagem ou nome do filme inválido");
+        alert("O filme não foi excluído.")
     }
-
-    nomeFilmeDeletadoInput.value = "";
-    imagemFilmeDeletadoInput.value = "";
-}
-
-function retirarFilmeDaTela (idFilme) {
-    let filmeDeletado = document.getElementById(idFilme); 
-    localStorage.removeItem(idFilme);
-    filmeDeletado.remove();
 }
 
 
 
 listarFilmesNaTela();
+
+let remover = document.querySelectorAll('.remover');
+remover.forEach((icone) => {
+    icone.addEventListener('click', () => {
+        let iconeBorda = icone.parentElement;
+        let legenda = iconeBorda.parentElement;
+        let divFilme = legenda.parentElement;
+        removerFilme(divFilme, legenda);
+    })
+})
