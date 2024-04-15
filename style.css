@@ -26,11 +26,43 @@ header {
     width: 130px;
 }
 
-.alura-logo {
+/* .alura-logo {
     width: 30px;
     position: absolute;
     top: 10px;
     right: 10px;
+} */
+
+.duvidas {
+    width: 30px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.duvidas-flutuante {
+    position: absolute;
+    display: none;
+
+    padding: 1em;
+    width: 20%;
+    top: 40px;
+    right: 10px;
+
+    text-align: left;
+    color: #000000;
+
+    background-color: #eee8e8;
+    border-radius: 1em;
+}
+
+.duvidas-flutuante span {
+    color: #000000;
+    font-weight: bold;
+}
+
+.duvidas:hover ~.duvidas-flutuante {
+    display: inline;
 }
 
 /* ------ Estilo Formulário de Cadastro ------ */
@@ -64,6 +96,12 @@ header {
     opacity: 0.6;
 }
 
+.duvidas {
+    font-size: 1.3em;
+    vertical-align: middle;
+    color: #FFFFFF;
+}
+
 /* ------ Estilo Lista de Filmes ------ */
 
 #listaFilmes img {
@@ -85,4 +123,18 @@ figure:hover {
 
 figure > img {
     margin: auto 5px
+}
+
+.remover {
+    vertical-align: middle;
+    margin-left: 10px;
+    border: solid 2px rgb(139, 55, 55);
+    color: rgb(214, 61, 61);
+    cursor: pointer;
+    scale: 0.7;
+    transition: 0.3s;
+}
+
+.remover:hover {
+    scale: 1;
 }

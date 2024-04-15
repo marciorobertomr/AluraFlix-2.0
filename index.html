@@ -13,22 +13,29 @@
         <header>
             <h1 class="page-title">AluraFlix</h1>
             <img src="https://www.alura.com.br/assets/img/imersoes/dev-2021/logo-imersao-aluraflix.svg" class="page-logo" alt="">
-            <a href="https://alura.com.br/" target="_blank">
+            <!-- <a href="https://alura.com.br/" target="_blank">
                 <img src="https://www.alura.com.br/assets/img/home/alura-logo.svg" alt="" class="alura-logo">
-            </a>
+            </a> -->
+            <div>
+                <ion-icon class="duvidas" name="information-circle-outline"></ion-icon>
+                <span class="duvidas-flutuante">
+                    Para <span>adicionar</span> um novo filme, digite o nome e a URL da imagem desejada com final ".jpg".
+                    <br><br>
+                    Se deseja <span>remover</span> um filme, basta clicar no <span>[x]</span> ao lado do nome cadastrado.
+                </span>
+            </div>
         </header>
 
         <main>
             <div class="container">
                 <p class="page-subtitle">
                     <h4>Coletânea Pessoal de Filmes</h4>
-                    <span>O que deseja fazer?</span>
+                    <span>Qual filme deseja adicionar?</span>
                 </p>
                 <div class="form-wrapper">
                     <input type="text" id="nomeFilme" name="nomeF" placeholder="Insira o nome do filme" required>
                     <input type="text" id="imagemFilme" name="imagemF" placeholder="Insira endereço url da imagem" required>
                     <button onClick="adicionarFilme()" >Adicionar Filme</button>
-                    <button onClick="removerFilme()">Remover Filme</button>
                 </div>
             </div>
     
@@ -37,5 +44,10 @@
             </div>
         </main>
     </body>
+    <!-- Script Funcionalidades -->
     <script src="./script.js"></script>
+
+    <!-- Script Ícones -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </html>
