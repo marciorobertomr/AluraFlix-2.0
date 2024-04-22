@@ -50,12 +50,11 @@ function adicionarFilme() {
                 break;
             }
         }
-
+    
         if (novo == true) {
             let localLista = nomeFilmeFavorito.replace(/ /g, "").toLowerCase();
             localStorage.setItem(localLista, JSON.stringify(filme));
-            location.reload();
-            listarFilmesNaTela(); //Envia a variável para a função
+            listarFilmesNaTela();
         }
     } else {
         alert("Endereço ou nome do filme inválido");
@@ -79,6 +78,16 @@ function listarFilmesNaTela () {
     }
 
     elementoListaFilmes.innerHTML = elementoFilmeFavorito;
+
+    let remover = document.querySelectorAll('.remover');
+    remover.forEach((icone) => {
+        icone.addEventListener('click', () => {
+            let iconeBorda = icone.parentElement;
+            let legenda = iconeBorda.parentElement;
+            let divFilme = legenda.parentElement;
+            removerFilme(divFilme, legenda);
+        })
+    })
 }
 
 function coletaneaFilmes() {
@@ -116,13 +125,3 @@ function removerFilme(idFilme, legenda) {
 
 
 listarFilmesNaTela();
-
-let remover = document.querySelectorAll('.remover');
-remover.forEach((icone) => {
-    icone.addEventListener('click', () => {
-        let iconeBorda = icone.parentElement;
-        let legenda = iconeBorda.parentElement;
-        let divFilme = legenda.parentElement;
-        removerFilme(divFilme, legenda);
-    })
-})
