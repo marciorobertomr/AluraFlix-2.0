@@ -138,3 +138,22 @@ figure > img {
 .remover:hover {
     scale: 1;
 }
+
+/* Responsividade */
+
+@media (max-width: 450px) {
+    .duvidas-flutuante {
+        width: 60%;
+    }
+
+    #listaFilmes img {
+        margin: 10px;
+        height: 220px;
+        max-width: 220px;
+        object-fit: cover; /* Redimensiona a imagem para preencher o espaço disponível, mantendo proporções */
+    }
+
+    #listaFilmes figcaption {
+        font-size: 0.8em;
+    }
+}
