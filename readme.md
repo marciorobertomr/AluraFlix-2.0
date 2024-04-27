@@ -35,12 +35,12 @@ A aplicação permite que o usuário adicione o nome do filme desejado e inclua 
 
 Em comparação ao projeto original visto na Imersão Dev, foram adicionadas as seguintes melhorias:
 
-- Tratamento de espaços extrar no nome e url, de forma não quebrar a apresentação em tela do filme; <br>
+- Tratamento de espaços extras no nome e endereço URL, de forma a não quebrar a apresentação do filme na tela; <br>
 
 - Salvamento dos filmes adicionados no armazenamento do navegador, permitindo guardar o registro para visualizá-lo mesmo após encerrar o navegador; <br>
 
-- Adicionado um ícone para tira-dúvidas sobre o funcionamento da aplicação; <br>
+- Adicionado ícone de tira-dúvidas sobre o funcionamento da aplicação; <br>
 
 - Adicionado botão para remover o filme desejado ao lado do nome, excluindo-o da visualização em tela e do armazenamento local do navegador; <br>
 
-- Adicionado responsividade com ajuste do tamanho dos filmes. <br>
+- Adicionado responsividade para ajuste da apresentação dos filmes em dispositivos mobile. <br>
